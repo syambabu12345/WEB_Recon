@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Attacks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='testing.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Cyber Security Vulnerability Scanners</h1>
+        
+        <div class="attack-list">
+            <a href="{{ url_for('sql_attack') }}" class="attack-box">
+                <div class="attack-number">1</div>
+                <div class="attack-name">SQL Injection Vulnerability Scanner</div>
+            </a>
+            <a href="{{ url_for('xss_attack') }}" class="attack-box">
+                <div class="attack-number">2</div>
+                <div class="attack-name">XSS Vulnerability Scanner</div>
+            </a>
+            <a href="{{ url_for('directory_traversal') }}" class="attack-box">
+                <div class="attack-number">3</div>
+                <div class="attack-name">Directory Traversal Vulnerability Scanner</div>
+            </a>
+        </div>
+
+        <button onclick="window.location.href='/'">Back to Home</button>
+        <!-- testing.html - Add this inside the container div, before the closing </div> -->
+        <button onclick="window.history.back()" class="back-button">Back</button>
+    </div>
+
+</body>
+</html>
