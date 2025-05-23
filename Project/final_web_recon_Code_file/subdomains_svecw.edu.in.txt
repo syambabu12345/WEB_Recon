@@ -1,9 +1,0 @@
-*.svecw.edu.in
-svecw.edu.in
-alumni.svecw.edu.in
-event.svecw.edu.in
-mail.svecw.edu.in
-old.svecw.edu.in
-svecw.edu.in
-www.svecw.edu.in
-www.svecw.edu.in
