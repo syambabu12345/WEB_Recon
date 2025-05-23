@@ -1,0 +1,324 @@
+/* Updated CSS with larger font sizes for specific elements */
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --danger: #ef233c;
+    --danger-dark: #d90429;
+    --success: #4cc9f0;
+    --warning: #f8961e;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: var(--dark);
+    line-height: 1.6;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 0.5rem;
+    font-size: 3rem; /* Larger heading */
+}
+
+.card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Larger form labels and inputs */
+.form-group {
+    margin-bottom: 2rem; /* Increased spacing */
+}
+
+label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 1.75rem; /* Larger labels */
+}
+
+input[type="text"],
+input[type="file"] {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: var(--border-radius);
+    font-size: 1.75rem; /* Larger input text */
+    transition: var(--transition);
+}
+
+/* Larger file input text */
+input[type="file"]::file-selector-button {
+    font-size: 1.5rem;
+    padding: 0.75rem 1.25rem;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.25);
+}
+
+.method-selector {
+    margin-bottom: 2rem; /* Increased spacing */
+}
+
+.method-selector label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 1.75rem; /* Larger method selector label */
+}
+
+.method-options {
+    display: flex;
+    gap: 1.5rem; /* Increased gap */
+}
+
+.method-option {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem; /* Larger radio button text */
+}
+
+.method-option input {
+    margin-right: 0.75rem;
+    transform: scale(1.5); /* Larger radio buttons */
+}
+
+.button-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem; /* Increased spacing */
+}
+
+button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.75rem; /* Larger button text */
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#scanButton {
+    background-color: var(--primary);
+    color: white;
+}
+
+#scanButton:hover {
+    background-color: var(--primary-dark);
+}
+
+#stopButton {
+    background-color: var(--danger);
+    color: white;
+    display: none;
+}
+
+#stopButton:hover {
+    background-color: var(--danger-dark);
+}
+
+#stopButton:disabled {
+    background-color: var(--gray);
+    cursor: not-allowed;
+}
+
+.progress-container {
+    margin: 2.5rem 0; /* Increased spacing */
+}
+
+.current-test {
+    background-color: #e9ecef;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 1.75rem; /* Larger test status text */
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #e9ecef;
+    height: 2rem; /* Thicker progress bar */
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: var(--primary);
+    width: 0%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem; /* Larger progress text */
+    font-weight: 500;
+    transition: width 0.3s ease;
+}
+
+#vulnerableLinks {
+    background-color: #fff3f3;
+    border-left: 5px solid var(--danger); /* Thicker border */
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin: 1.5rem 0;
+    display: none;
+    font-size: 1.5rem; /* Larger vulnerable links text */
+}
+
+#vulnerableLinks strong {
+    color: var(--danger);
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 1.75rem; /* Larger heading */
+}
+
+/* Larger scan results/logs */
+#scanResult {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    height: 400px; /* Taller log container */
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 1.75rem; /* Larger log text */
+    margin-bottom: 1.5rem;
+    border: 1px solid #e9ecef;
+}
+
+.log-entry {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0;
+    line-height: 1.8; /* Better spacing */
+}
+
+.log-info {
+    color: var(--primary);
+}
+
+.log-error {
+    color: var(--danger);
+}
+
+.log-vulnerable {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+.log-test {
+    color: var(--gray);
+}
+
+.status-message {
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-top: 1.5rem;
+    display: none;
+    font-size: 1.5rem; /* Larger status messages */
+}
+
+#safeMessage {
+    background-color: #e8f7ff;
+    border-left: 5px solid var(--success);
+    color: #0066cc;
+}
+
+#stoppedMessage {
+    background-color: #fff8e8;
+    border-left: 5px solid var(--warning);
+    color: #cc8500;
+}
+
+.test-status {
+    color: var(--gray);
+    font-style: italic;
+    font-size: 1.5rem; /* Larger status text */
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .card {
+        padding: 1.5rem;
+    }
+    
+    label {
+        font-size: 1.5rem;
+    }
+    
+    input[type="text"],
+    input[type="file"] {
+        font-size: 1.5rem;
+    }
+    
+    .method-options {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .method-option {
+        font-size: 1.4rem;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    button {
+        width: 100%;
+        font-size: 1.5rem;
+    }
+    
+    #scanResult {
+        font-size: 1.5rem;
+        height: 350px;
+    }
+    
+    .current-test {
+        font-size: 1.5rem;
+    }
+}
+h3 {
+
+    font-size: 2rem; /* Larger heading */
+}

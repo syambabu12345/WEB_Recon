@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Extractor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='url_grabber.css') }}">
+</head>
+<body>
+    <h3>URL Extractor (Manual Input or File Upload - Choose One)</h3>
+
+    <label>
+        <input type="radio" name="inputType" id="manualRadio" checked> Manual Input
+    </label>
+    <label>
+        <input type="radio" name="inputType" id="fileRadio"> Upload File
+    </label>
+
+    <textarea id="manualInput" placeholder="Enter text containing URLs..."></textarea>
+    <input type="file" id="fileInput" accept=".txt,.csv,.json" style="display: none;">
+    <button id="extractUrls">Extract URLs</button>
+
+    <div class="container">
+        <label>
+            <input type="checkbox" id="selectAll"> Select All
+        </label>
+        <div class="subdomains" id="extractedUrls">
+            <!-- URLs will be added dynamically here -->
+        </div>
+    </div>
+
+    <div class="actions">
+        <button id="saveUrls">Save Extracted URLs</button>
+        <button id="back" onclick="window.location.href='/'">Back</button>
+        <button id="test" onclick="window.location.href='/testing'">Testing Page</button>
+    </div>
+
+    <h3>File Status:</h3>
+    <pre id="fileStatus">No file created yet.</pre>
+
+    <script>
+        function extractUrlsFromText(text) {
+            const urlPattern = /https?:\/\/[^\s]+/g;
+            let urls = text.match(urlPattern) || [];
+        
+            // If no URLs are found, assume the text contains domain names and prepend "https://"
+            if (urls.length === 0) {
+                let lines = text.split(/\r?\n/); // Split by line breaks
+                urls = lines.map(line => line.trim()).filter(line => line.length > 0).map(domain => `https://${domain}`);
+            }
+        
+            return urls;
+        }
+        
+        document.getElementById('manualRadio').addEventListener('change', () => {
+            document.getElementById('manualInput').style.display = 'block';
+            document.getElementById('fileInput').style.display = 'none';
+        });
+
+        document.getElementById('fileRadio').addEventListener('change', () => {
+            document.getElementById('manualInput').style.display = 'none';
+            document.getElementById('fileInput').style.display = 'block';
+        });
+
+        document.getElementById('extractUrls').addEventListener('click', () => {
+            let text = document.getElementById('manualInput').value;
+            let file = document.getElementById('fileInput').files[0];
+
+            if (document.getElementById('manualRadio').checked) {
+                displayExtractedUrls(extractUrlsFromText(text));
+            } else if (document.getElementById('fileRadio').checked && file) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    displayExtractedUrls(extractUrlsFromText(event.target.result));
+                };
+                reader.readAsText(file);
+            } else {
+                alert("Please enter text or select a file.");
+            }
+        });
+
+        function displayExtractedUrls(urls) {
+            let extractedUrlsDiv = document.getElementById('extractedUrls');
+            extractedUrlsDiv.innerHTML = "";
+            
+            if (urls.length > 0) {
+                urls.forEach(url => {
+                    let label = document.createElement('label');
+                    label.innerHTML = `<input type="checkbox" class="subdomain" value="${url}"> ${url}`;
+                    extractedUrlsDiv.appendChild(label);
+                });
+
+                document.getElementById('selectAll').checked = false; // Reset "Select All"
+            } else {
+                extractedUrlsDiv.innerHTML = "<p>No URLs found.</p>";
+            }
+        }
+
+        // "Select All" functionality
+        document.getElementById('selectAll').addEventListener('change', function () {
+            let isChecked = this.checked;
+            document.querySelectorAll('.subdomain').forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        // Save selected URLs to the server
+        document.getElementById('saveUrls').addEventListener('click', async () => {
+            let selectedUrls = [];
+            document.querySelectorAll('.subdomain:checked').forEach(checkbox => {
+                selectedUrls.push(checkbox.value);
+            });
+
+            if (selectedUrls.length === 0) {
+                alert("Please select at least one URL to save.");
+                return;
+            }
+
+            // Get domain from URL or prompt user
+            let domain = new URL(window.location.href).searchParams.get('domain') || 
+                         prompt("Enter domain name to append to (or leave blank for new file):");
+
+            try {
+                let response = await fetch('/save_urls', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        urls: selectedUrls,
+                        domain: domain || ''
+                    }) 
+                });
+
+                let result = await response.json();
+                document.getElementById('fileStatus').textContent = result.message;
+            } catch (error) {
+                console.error("Error saving URLs:", error);
+                document.getElementById('fileStatus').textContent = "Failed to save URLs.";
+            }
+        });
+    </script>
+</body>
+</html>
